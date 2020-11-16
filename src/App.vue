@@ -1,8 +1,13 @@
 <template>
-<div id="app">
+<v-app app>
 	<app-bar></app-bar>
 	<app-nav></app-nav>
-</div>
+	<v-main>
+		<v-container fluid>
+			<router-view></router-view>
+		</v-container>
+	</v-main>
+</v-app>
 </template>
 
 <script>
@@ -11,7 +16,7 @@ import AppNav from './components/AppNav.vue'
 export default {
 	components: {
 		AppBar,
-		AppNav
+		AppNav,
 	},
 	data: () => ({}),
 }

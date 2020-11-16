@@ -5,19 +5,17 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
 	state: {
-		navDrawer: false,
+		colorTheme: '#FF9999',
+		drawer: false
 	},
 	mutations: {
+		changeColor(state, payload) {
+			state.colorTheme = payload;
+		},
 		changeDrawer(state) {
-			state.navDrawer === false ? state.navDrawer = true : state.navDrawer = false;
+			state.drawer = !state.drawer;
 		}
 	},
-	actions: {
-		setDrawer: ({
-			commit
-		}) => {
-			commit('changeDrawer');
-		}
-	},
+	actions: {},
 	modules: {}
 });

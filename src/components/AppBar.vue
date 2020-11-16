@@ -1,6 +1,6 @@
 <template>
-<v-app-bar color="#FF9999" dark dense>
-	<v-app-bar-nav-icon @click="openDrawer"></v-app-bar-nav-icon>
+<v-app-bar v-bind:color="this.$store.state.colorTheme" dark dense app>
+	<v-app-bar-nav-icon @click="changeDrawer"></v-app-bar-nav-icon>
 	<v-toolbar-title>
 		<h4> 📝 </h4>
 		<h1> For Log</h1>
@@ -15,24 +15,39 @@
 		<v-icon>mdi-magnify</v-icon>
 	</v-btn>
 
-	<v-btn icon>
-		<v-icon>mdi-dots-vertical</v-icon>
-	</v-btn>
+	<v-menu left bottom>
+		<template v-slot:activator="{ on, attrs }">
+			<v-btn icon v-bind="attrs" v-on="on">
+				<v-icon>mdi-dots-vertical</v-icon>
+			</v-btn>
+		</template>
+
+		<v-list>
+			<v-list-item v-for="(color, index) in colors" :key="index" @click="changeColor(color.value)">
+				<v-list-item-title>{{color.name}}</v-list-item-title>
+			</v-list-item>
+		</v-list>
+	</v-menu>
 </v-app-bar>
 </template>
 
 <script>
-import {
-	mapActions
-} from 'vuex'
 export default {
-	computed: {
-		...mapActions(['setDrawer'])
-	},
-	data: () => ({}),
+	data: () => ({
+		colors: [
+			{name: 'coral', value: '#FF9999'},
+			{name: 'yellow', value: '#FFFF00'},
+			{name: 'green', value: '#66FF66'},
+			{name: 'blue', value: '#0099FF'},
+			{name: 'purple', value: '#CC66FF'},
+		]
+	}),
 	methods: {
-		openDrawer(){
-			this.setDrawer;
+		changeColor(colorValue) {
+			this.$store.commit('changeColor', colorValue);
+		},
+		changeDrawer() {
+			this.$store.commit('changeDrawer');
 		}
 	}
 
