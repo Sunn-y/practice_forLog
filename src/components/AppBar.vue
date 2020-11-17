@@ -1,5 +1,5 @@
 <template>
-<v-app-bar v-bind:color="this.$store.state.colorTheme" dark dense app>
+<v-app-bar v-bind:color="color" dark dense app>
 	<v-app-bar-nav-icon @click="changeDrawer"></v-app-bar-nav-icon>
 	<v-toolbar-title>
 		<h4> 📝 </h4>
@@ -32,8 +32,10 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
 	data: () => ({
+		color: '',
 		colors: [
 			{name: 'coral', value: '#FF9999'},
 			{name: 'yellow', value: '#FFFF00'},
@@ -42,9 +44,14 @@ export default {
 			{name: 'purple', value: '#CC66FF'},
 		]
 	}),
+	async mounted(){
+			const res = await axios.get("http://localhost:3000/theme");
+			this.color = res.data.color;
+			console.log(res.data.color);
+	},
 	methods: {
-		changeColor(colorValue) {
-			this.$store.commit('changeColor', colorValue);
+		async changeColor(colorValue) {
+			await axios.post("http://localhost:3000/theme", {color: colorValue});
 		},
 		changeDrawer() {
 			this.$store.commit('changeDrawer');
